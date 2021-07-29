@@ -4,6 +4,10 @@ export function ToDo() {
 	const [todos, setTodos] = React.useState([]);
 	const [task, setTask] = React.useState("");
 
+	React.useEffect(() => {
+		console.log("");
+	});
+
 	return (
 		<div>
 			<input

@@ -1,11 +1,11 @@
 import React from "react";
-import { ToDoList } from "./ToDo";
+import { ToDo } from "./ToDo";
 
 //create your first component
 export function Home() {
 	return (
 		<div>
-			<ToDoList />
+			<ToDo />
 		</div>
 	);
 }
