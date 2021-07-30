@@ -19,8 +19,8 @@ export function ToDo() {
 				//error handling
 				console.log(error);
 			});
-    
-    fetch("https://assets.breatheco.de/apis/fake/todos/user/GMDEEP", {
+
+		fetch("https://assets.breatheco.de/apis/fake/todos/user/GMDEEP", {
 			method: "PUT"
 		})
 			.then(resp => {
@@ -34,8 +34,8 @@ export function ToDo() {
 				//error handling
 				console.log(error);
 			});
-    
-    fetch("https://assets.breatheco.de/apis/fake/todos/user/GMDEEP", {
+
+		fetch("https://assets.breatheco.de/apis/fake/todos/user/GMDEEP", {
 			method: "DEL"
 		})
 			.then(resp => {
@@ -52,40 +52,47 @@ export function ToDo() {
 	}, []);
 
 	return (
-		<div>
-			<input
-				type="text"
-				value={task}
-				onChange={event => {
-					setTask(event.target.value);
-				}}
-				onKeyPress={event => {
-					if (event.key === "Enter") {
-						const newTodos = todos.concat([task]);
-						setTodos(newTodos);
-						setTask("");
-					}
-				}}
-			/>
-
-			<ul>
+		<div className="row w-50">
+			<div className="col-12 d-flex justify-content-center">
+				<input
+					type="text"
+					value={task}
+					onChange={event => {
+						setTask(event.target.value);
+					}}
+					onKeyPress={event => {
+						if (event.key === "Enter") {
+							const newTodos = todos.concat([task]);
+							setTodos(newTodos);
+							setTask("");
+						}
+					}}
+				/>
+			</div>
+			<div className="col-12">
 				{todos.map((item, index) => {
 					return (
-						<li key={index}>
-							{item}
-							<button
-								onClick={() => {
-									const newerTodos = todos.filter((e, i) => {
-										return i !== index;
-									});
-									setTodos(newerTodos);
-								}}>
-								delete
-							</button>
-						</li>
+						<div
+							className="row d-flex justify-content-between"
+							key={index}>
+							<div className="col">{item}</div>
+							<div className="col-2 d-flex justify-content-end">
+								<button
+									onClick={() => {
+										const newerTodos = todos.filter(
+											(e, i) => {
+												return i !== index;
+											}
+										);
+										setTodos(newerTodos);
+									}}>
+									<i className="far fa-trash-alt"></i>
+								</button>
+							</div>
+						</div>
 					);
 				})}
-			</ul>
+			</div>
 		</div>
 	);
 }
