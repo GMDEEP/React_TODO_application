@@ -5,8 +5,21 @@ export function ToDo() {
 	const [task, setTask] = React.useState("");
 
 	React.useEffect(() => {
-		console.log("");
-	});
+		fetch("https://assets.breatheco.de/apis/fake/todos/user/GMDEEP", {
+			method: "GET"
+		})
+			.then(resp => {
+				return resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
+			})
+			.then(data => {
+				const newTodos = data.map(x => x.label);
+				setTodos(newTodos);
+			})
+			.catch(error => {
+				//error handling
+				console.log(error);
+			});
+	}, []);
 
 	return (
 		<div>
