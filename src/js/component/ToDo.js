@@ -1,55 +1,33 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { useState } from "react";
+import { getTodoList, updateTodoList, createTodoList } from "../lib/api";
 
 export function ToDo() {
 	const [todos, setTodos] = React.useState([]);
 	const [task, setTask] = React.useState("");
 
 	React.useEffect(() => {
-		fetch("https://assets.breatheco.de/apis/fake/todos/user/GMDEEP", {
-			method: "GET"
-		})
+		console.log("Hello");
+		getTodoList()
 			.then(resp => {
-				return resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
+				if (resp.status === 404) {
+					createTodoList();
+					return [];
+				} else {
+					return resp.json();
+				}
 			})
 			.then(data => {
-				const newTodos = data.map(x => x.label);
-				setTodos(newTodos);
+				setTodos(data.map(x => x.label));
 			})
 			.catch(error => {
-				//error handling
-				console.log(error);
-			});
-
-		fetch("https://assets.breatheco.de/apis/fake/todos/user/GMDEEP", {
-			method: "PUT"
-		})
-			.then(resp => {
-				return resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
-			})
-			.then(data => {
-				const newTodos = data.map(x => x.label);
-				setTodos(newTodos);
-			})
-			.catch(error => {
-				//error handling
-				console.log(error);
-			});
-
-		fetch("https://assets.breatheco.de/apis/fake/todos/user/GMDEEP", {
-			method: "DEL"
-		})
-			.then(resp => {
-				return resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
-			})
-			.then(data => {
-				const newTodos = data.map(x => x.label);
-				setTodos(newTodos);
-			})
-			.catch(error => {
-				//error handling
 				console.log(error);
 			});
 	}, []);
+	React.useEffect(() => {
+		updateTodoList(todos);
+	}, [todos]);
 
 	return (
 		<div className="row w-50">
